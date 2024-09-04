@@ -67,6 +67,7 @@ made available to the loop are not index and value like an array. It is key and 
 
 ```
 myMap := make(map[string]int)
+myMap["hi"]++;
 
 for k, v := range map {
     fmt.Printfmt("the key of the map is ")
