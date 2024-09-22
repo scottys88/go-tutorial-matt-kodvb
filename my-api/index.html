@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Go WebSocket Tutorial</title>
+</head>
+
+<body>
+    <h2>Hello World</h2>
+
+    <form action="http://localhost:8080/image" id="myForm" method="post" enctype="multipart/form-data">
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image"><br><br>
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById("myForm")
+
+        const submitHandler = async (e) => {
+            e.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form); // Create a FormData object with the form's data
+
+            try {
+                const response = await fetch("http://localhost:8080/image", {
+                    method: "POST",
+                    body: formData // Send the form data as multipart/form-data
+                });
+
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+
+                const result = await response.json();
+                console.log("Success:", result);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        form.addEventListener("submit", submitHandler)
+
+
+        let socket = new WebSocket("ws://localhost:8080/ws");
+        console.log("Attempting Connection...");
+
+        socket.onopen = () => {
+            console.log("Successfully Connected");
+            socket.send("Hi From the Client!")
+        };
+
+        socket.onclose = event => {
+            console.log("Socket Closed Connection: ", event);
+            socket.send("Client Closed!")
+        };
+
+        socket.onerror = error => {
+            console.log("Socket Error: ", error);
+        };
+
+    </script>
+</body>
+
+</html>

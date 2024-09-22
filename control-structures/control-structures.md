@@ -75,3 +75,48 @@ for k, v := range map {
 ```
 
 e.g. https://go.dev/play/p/5Vmw6ruerKQ
+
+## Switch statements in Go
+
+Switch statements basically syntatic sugar on top of a series of 'if, else' statements. 
+
+Can be represented like so:
+
+```
+switch a := getVal(); a {
+    case 0, 1, 2:
+        fmt.Println("Do something")
+    case 3, 4, 5, 6:
+        // can be a nop (no op)
+    default:
+        fmt.Println("This is the default statment")
+}
+
+// The above is using the short declaration style but is equivalent to:
+
+var b = getVal()
+switch b {
+    // Same switch statements as above
+}
+```
+
+In Go a switch statement can also be represented like the below. See example: https://go.dev/play/p/_OOtV5Y3H0Q
+
+```
+
+var a = getVal()
+
+switch {
+    case a < 1:
+        fmt.Println("a is less than one)
+
+    case a == 2
+
+    default:
+        fmt.Println("This is the default)
+}
+
+
+```
+
+
